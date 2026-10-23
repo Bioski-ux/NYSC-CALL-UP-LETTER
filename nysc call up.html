@@ -1,0 +1,271 @@
+
+<!DOCTYPE html>
+<head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><title>
+	Corps Member Verification - NYSC
+</title><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <style type="text/css">
+        html, body {
+            background: #f0f4f1;
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: #1a2e1a;
+            overflow-x: hidden;
+            -webkit-text-size-adjust: 100%;
+        }
+        *, *::before, *::after { box-sizing: border-box; }
+        .verify-shell { max-width: 600px; margin: 0 auto; padding: 24px 16px 32px; width: 100%; }
+        .verify-card {
+            background: #fff;
+            border: 1px solid #ccdacc;
+            border-radius: 10px;
+            box-shadow: 0 4px 14px rgba(0,0,0,.06);
+            overflow: hidden;
+        }
+        .verify-header {
+            display: flex; align-items: center; gap: 14px; padding: 18px 20px;
+            background: linear-gradient(135deg,#4c8551,#2e6632); color: #fff;
+        }
+        .verify-header .logo-wrap {
+            flex-shrink: 0; width: 52px; height: 52px;
+            background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.35);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center; overflow: hidden;
+        }
+        .verify-header .logo-wrap img { width: 40px; height: 40px; object-fit: contain; }
+        .verify-header .logo-wrap i { font-size: 22px; color: #fff; }
+        .verify-header-text h2 {
+            margin: 0 0 2px; font-size: 15px; font-weight: 700; letter-spacing: .3px;
+            line-height: 1.2; color: #fff !important;
+        }
+        .verify-header-text p { margin: 0; font-size: 11px; opacity: .82; letter-spacing: .2px; color: #fff; }
+        .status-banner {
+            display: flex; align-items: center; gap: 10px; padding: 10px 20px;
+            font-size: 12px; font-weight: 600; letter-spacing: .3px;
+        }
+        .status-banner.verified { background: #e8f5ea; border-bottom: 1px solid #ccdacc; color: #2e5e32; }
+        .status-banner.error { background: #fef2f2; border-bottom: 1px solid #fecaca; color: #c0392b; }
+        .status-banner i { font-size: 15px; }
+        .status-badge {
+            margin-left: auto; display: inline-flex; align-items: center; gap: 5px;
+            padding: 3px 10px; border-radius: 20px; font-size: 10px; font-weight: 700;
+            letter-spacing: .6px; text-transform: uppercase; background: #3d7a42; color: #fff;
+        }
+        .verify-identity {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            padding: 16px 20px 8px;
+        }
+        .verify-photo {
+            flex-shrink: 0;
+            width: 96px;
+            height: 120px;
+            border: 2px solid #2e6632;
+            border-radius: 6px;
+            background: #f4f8f4;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .verify-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .verify-photo .photo-placeholder {
+            color: #8ca88c;
+            font-size: 28px;
+            font-family: FontAwesome;
+        }
+        .verify-identity-fields { flex: 1; min-width: 0; }
+        .verify-identity-fields .field-row { padding-left: 0; padding-right: 0; }
+        .verify-body { padding: 4px 0 0; }
+        .field-section-title {
+            padding: 12px 20px 4px; font-size: 10px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: .7px; color: #52725a; border-top: 1px solid #ccdacc;
+        }
+        .field-section-title:first-child { border-top: none; }
+        .field-row {
+            display: flex; align-items: baseline; gap: 12px; padding: 9px 20px;
+            border-bottom: 1px solid #f4f8f4;
+        }
+        .field-row:last-of-type { border-bottom: none; }
+        .field-icon { flex-shrink: 0; width: 20px; text-align: center; color: #3d7a42; font-size: 13px; }
+        .field-label {
+            flex-shrink: 0; width: 148px; font-size: 11px; font-weight: 700;
+            text-transform: uppercase; letter-spacing: .5px; color: #52725a;
+        }
+        .field-value { flex: 1; font-size: 13px; font-weight: 600; color: #1a2e1a; word-break: break-word; }
+        .error-body { padding: 36px 24px; text-align: center; }
+        .error-body i { display: block; font-size: 36px; color: #c0392b; opacity: .7; margin-bottom: 12px; }
+        .error-body p { font-size: 13px; color: #52725a; max-width: 380px; margin: 0 auto; line-height: 1.6; }
+        .verify-footer {
+            display: flex; align-items: center; justify-content: space-between; gap: 8px;
+            padding: 10px 20px; background: #f4f8f4; border-top: 1px solid #ccdacc;
+            font-size: 10px; color: #8ca88c;
+        }
+        .verify-footer i { color: #3d7a42; margin-right: 4px; }
+
+        /* Tablet / narrow desktop */
+        @media (max-width: 640px) {
+            .verify-shell { padding: 12px 10px 24px; }
+            .verify-header { padding: 14px 14px; gap: 12px; }
+            .verify-header-text h2 { font-size: 14px; }
+            .verify-header-text p { font-size: 10px; }
+            .status-banner {
+                flex-wrap: wrap;
+                padding: 10px 14px;
+                gap: 8px;
+            }
+            .status-badge { margin-left: 0; }
+            .verify-identity {
+                flex-direction: column;
+                align-items: center;
+                padding: 16px 14px 8px;
+                gap: 14px;
+            }
+            .verify-identity-fields { width: 100%; }
+            .field-section-title { padding: 12px 14px 4px; }
+            .field-row {
+                flex-wrap: wrap;
+                align-items: flex-start;
+                gap: 4px 10px;
+                padding: 10px 14px;
+            }
+            .field-icon { padding-top: 1px; }
+            .field-label {
+                width: auto;
+                flex: 1 1 calc(100% - 32px);
+                min-width: 0;
+            }
+            .field-value {
+                flex: 1 1 100%;
+                padding-left: 30px;
+                font-size: 14px;
+            }
+            .verify-footer {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+                padding: 10px 14px;
+            }
+            .error-body { padding: 28px 16px; }
+        }
+
+        /* Small phones */
+        @media (max-width: 380px) {
+            .verify-header .logo-wrap { width: 44px; height: 44px; }
+            .verify-header .logo-wrap img { width: 34px; height: 34px; }
+            .verify-photo { width: 84px; height: 105px; }
+            .field-value { padding-left: 30px; font-size: 13px; }
+        }
+    </style>
+</head>
+<body>
+   
+</div>
+
+<div class="aspNetHidden">
+
+	
+</div>
+        <div class="verify-shell">
+            <div class="verify-card">
+                <div class="verify-header">
+                    <div class="logo-wrap">
+                        <img src="/nysc logo 2 .png" alt="NYSC"
+                             onerror="this.style.display='none';this.parentNode.innerHTML='<i class=\'fa fa-shield\'></i>';" />
+                    </div>
+                    <div class="verify-header-text">
+                        <h2>Corps Member Verification</h2>
+                        <p>National Youth Service Corps - Call-Up Letter Authentication</p>
+                    </div>
+                </div>
+
+                <div id="pnlResult">
+	
+                    <div id="statusBanner" class="status-banner verified">
+                        <i class="fa fa-check-circle"></i>
+                        This call-up letter has been authenticated.
+                        <span class="status-badge"><i class="fa fa-check"></i> Verified</span>
+                    </div>
+
+                    <div class="verify-body">
+                        <div class="field-section-title">Personal Information</div>
+                        <div class="verify-identity">
+                            <div class="verify-photo">
+                                <img id="imgPassport" src="/C9634899-2F4D-4B09-A4A6-04152C0704D7.png" />
+                                
+                            </div>
+                            <div class="verify-identity-fields">
+                                <div class="field-row">
+                                    <span class="field-icon"><i class="fa fa-user"></i></span>
+                                    <span class="field-label">Full Name</span>
+                                    <span class="field-value"><span id="lblFullName">Abiye Biobele Fisisi</span></span>
+                                </div>
+                                <div class="field-row">
+                                    <span class="field-icon"><i class="fa fa-id-badge"></i></span>
+                                    <span class="field-label">Call-Up Number</span>
+                                    <span class="field-value"><span id="lblCallUpNo">NYSC/RPB/2026/265197</span></span>
+                                </div>
+                                <div class="field-row">
+                                    <span class="field-icon"><i class="fa fa-venus-mars"></i></span>
+                                    <span class="field-label">Gender</span>
+                                    <span class="field-value"><span id="lblGender">Male</span></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="pnlCallUpFields">
+		
+                            <div class="field-row">
+                                <span class="field-icon"><i class="fa fa-graduation-cap"></i></span>
+                                <span class="field-label">Institution</span>
+                                <span class="field-value"><span id="lblInstitution">Kenule Beeson Saro-Wiwa Polytechnic</span></span>
+                            </div>
+                            <div class="field-section-title">Deployment Details</div>
+                            <div class="field-row">
+                                <span class="field-icon"><i class="fa fa-map-marker"></i></span>
+                                <span class="field-label">State of Deployment</span>
+                                <span class="field-value"><span id="lblDeploymentState">Abia</span></span>
+                            </div>
+                            <div class="field-row">
+                                <span class="field-icon"><i class="fa fa-building"></i></span>
+                                <span class="field-label">Camp Address</span>
+                                <span class="field-value"><span id="lblCampAddress">NYSC Perm. Orient. Camp, Umunna Bende L.G.A Abia State</span></span>
+                            </div>
+                            <div class="field-row">
+                                <span class="field-icon"><i class="fa fa-calendar"></i></span>
+                                <span class="field-label">Date Reporting</span>
+                                <span class="field-value"><span id="lblDateReporting">30 Sep 2026</span></span>
+                            </div>
+                            <div class="field-row">
+                                <span class="field-icon"><i class="fa fa-list-ol"></i></span>
+                                <span class="field-label">Batch / Year</span>
+                                <span class="field-value"><span id="lblBatch">Batch C / 2026</span></span>
+                            </div>
+                        
+	</div>
+
+                        
+
+                        
+
+                        
+                        
+                    </div>
+                
+</div>
+
+                
+
+                <div class="verify-footer">
+                    <span><i class="fa fa-clock-o"></i>Verified: <span id="lblVerifyDate">23 Oct 2026, 19:46</span></span>
+                    <span>NYSC Corps Member Management System</span>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
